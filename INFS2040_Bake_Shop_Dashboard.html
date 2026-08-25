@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The INFS2040 Bake Shop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBF3E7;
+    --cream-dark:#F1E2C8;
+    --paper:#FFFDF8;
+    --choc:#3E2A20;
+    --choc-soft:#6B4A3A;
+    --pink:#F2A0C0;
+    --pink-dark:#C96D91;
+    --caramel:#D9A441;
+    --caramel-dark:#A9781F;
+    --mint:#8FBFA0;
+    --mint-dark:#5D8F71;
+    --berry:#C43E63;
+    --berry-dark:#8F2846;
+    --line:#E7D8BE;
+    --shadow: 0 6px 0 rgba(62,42,32,0.08);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--cream);
+    background-image:
+      radial-gradient(circle at 6% 12%, rgba(242,160,192,0.16) 0, transparent 40%),
+      radial-gradient(circle at 94% 8%, rgba(217,164,65,0.16) 0, transparent 40%),
+      radial-gradient(circle at 90% 90%, rgba(143,191,160,0.14) 0, transparent 40%);
+    color:var(--choc);
+    font-family:'Nunito', sans-serif;
+    line-height:1.6;
+    padding-bottom:4rem;
+  }
+
+  a{color:inherit;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    max-width:900px;
+    margin:0 auto;
+    padding:3rem 1.5rem 1rem;
+    text-align:center;
+  }
+  .eyebrow{
+    font-family:'Fredoka', sans-serif;
+    font-size:0.85rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--berry-dark);
+    background:#FBE3EC;
+    display:inline-block;
+    padding:0.3rem 0.9rem;
+    border-radius:999px;
+    margin-bottom:1rem;
+    border:1.5px solid #F3C3D6;
+  }
+  h1.title{
+    font-family:'Fredoka', sans-serif;
+    font-weight:700;
+    font-size:clamp(2.1rem, 5vw, 3.2rem);
+    margin:0 0 0.5rem;
+    color:var(--choc);
+  }
+  .title span{color:var(--berry);}
+  .subtitle{
+    font-size:1.05rem;
+    color:var(--choc-soft);
+    max-width:560px;
+    margin:0 auto 2rem;
+  }
+
+  /* cake tiers nav */
+  .cake-wrap{
+    display:flex;
+    justify-content:center;
+    margin:1.5rem auto 0.5rem;
+  }
+  .cake-nav{
+    display:grid;
+    gap:10px;
+    width:100%;
+    max-width:520px;
+  }
+  .tier-btn{
+    font-family:'Fredoka', sans-serif;
+    font-weight:600;
+    font-size:1rem;
+    border:none;
+    cursor:pointer;
+    border-radius:16px;
+    padding:1rem 1.3rem;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:var(--shadow);
+    transition:transform 0.15s ease;
+    text-align:left;
+  }
+  .tier-btn:hover{transform:translateY(-2px);}
+  .tier-btn:active{transform:translateY(1px);}
+  .tier-btn .lbl{display:flex; flex-direction:column; gap:2px;}
+  .tier-btn .lbl small{font-family:'Nunito',sans-serif; font-weight:700; font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase; opacity:0.75;}
+  .tier-btn .arrow{font-size:1.2rem;}
+  .tier-week4{background:var(--mint); color:#254A34;}
+  .tier-week3{background:var(--caramel); color:#4A360E;}
+  .tier-week2{background:var(--pink); color:#5C1F35;}
+
+  .progress-strip{
+    max-width:520px;
+    margin:1.5rem auto 0;
+    background:var(--paper);
+    border:1.5px solid var(--line);
+    border-radius:14px;
+    padding:0.8rem 1.1rem;
+    display:flex;
+    align-items:center;
+    gap:0.8rem;
+    font-size:0.9rem;
+    color:var(--choc-soft);
+  }
+  .progress-track{
+    flex:1;
+    height:10px;
+    background:var(--cream-dark);
+    border-radius:999px;
+    overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg, var(--pink), var(--caramel), var(--mint));
+    border-radius:999px;
+    transition:width 0.4s ease;
+  }
+  .progress-num{font-family:'Fredoka',sans-serif; font-weight:600; color:var(--choc);}
+
+  /* ---------- SECTIONS ---------- */
+  .section{
+    max-width:900px;
+    margin:3.5rem auto 0;
+    padding:0 1.5rem;
+    scroll-margin-top:20px;
+  }
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:0.9rem;
+    margin-bottom:0.3rem;
+  }
+  .section-tag{
+    font-family:'Fredoka', sans-serif;
+    font-weight:600;
+    font-size:0.78rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    padding:0.25rem 0.7rem;
+    border-radius:999px;
+    white-space:nowrap;
+  }
+  .tag-week2{background:#FBE3EC; color:var(--berry-dark);}
+  .tag-week3{background:#FBEED1; color:var(--caramel-dark);}
+  .tag-week4{background:#E4F0E7; color:var(--mint-dark);}
+
+  h2.section-title{
+    font-family:'Fredoka', sans-serif;
+    font-weight:600;
+    font-size:1.7rem;
+    margin:0;
+    color:var(--choc);
+  }
+  .section-sub{
+    color:var(--choc-soft);
+    margin:0.4rem 0 1.7rem;
+    max-width:640px;
+  }
+
+  /* recipe cards (definitions) */
+  .card-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
+    gap:14px;
+    margin-bottom:2.2rem;
+  }
+  .flip-card{
+    perspective:1000px;
+    height:225px;
+    cursor:pointer;
+  }
+  .flip-inner{
+    position:relative;
+    width:100%;
+    height:100%;
+    transition:transform 0.5s cubic-bezier(.2,.8,.2,1);
+    transform-style:preserve-3d;
+  }
+  .flip-card.flipped .flip-inner{transform:rotateY(180deg);}
+  .flip-face{
+    position:absolute;
+    inset:0;
+    backface-visibility:hidden;
+    border-radius:16px;
+    padding:1.1rem;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    box-shadow:var(--shadow);
+  }
+  .flip-front{
+    background:var(--paper);
+    border:1.5px dashed var(--line);
+    align-items:center;
+    text-align:center;
+    gap:0.4rem;
+  }
+  .flip-front .term{
+    font-family:'Fredoka', sans-serif;
+    font-weight:600;
+    font-size:1.08rem;
+    color:var(--choc);
+  }
+  .flip-front .hint{font-size:0.78rem; color:var(--choc-soft); opacity:0.75;}
+  .flip-back{
+    background:var(--choc);
+    color:var(--cream);
+    transform:rotateY(180deg);
+    font-size:0.83rem;
+    overflow-y:auto;
+    gap:0.55rem;
+  }
+  .flip-back b{color:var(--pink);}
+  .flip-back .def{margin:0;}
+  .flip-back .analogy{
+    margin:0;
+    padding-top:0.5rem;
+    border-top:1px dashed rgba(251,243,231,0.3);
+    color:#F6E4D6;
+  }
+  .flip-back .analogy .lead{
+    font-family:'Fredoka', sans-serif;
+    font-weight:600;
+    font-size:0.75rem;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    color:var(--caramel);
+    display:block;
+    margin-bottom:0.2rem;
+  }
+
+  /* content notes block */
+  .note-block{
+    background:var(--paper);
+    border:1.5px solid var(--line);
+    border-radius:16px;
+    padding:1.3rem 1.5rem;
+    margin-bottom:2rem;
+    box-shadow:var(--shadow);
+  }
+  .note-block h3{
+    font-family:'Fredoka',sans-serif;
+    font-size:1.05rem;
+    margin:0 0 0.6rem;
+    color:var(--choc);
+  }
+  .note-block ul{margin:0; padding-left:1.2rem;}
+  .note-block li{margin-bottom:0.4rem;}
+  .note-block p{margin:0 0 0.6rem;}
+
+  /* ---------- QUIZ ---------- */
+  .quiz-box{
+    background:var(--paper);
+    border-radius:20px;
+    border:2px solid var(--line);
+    padding:1.6rem 1.6rem 1.8rem;
+    margin-top:0.5rem;
+  }
+  .quiz-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:1rem;
+    flex-wrap:wrap;
+    margin-bottom:1rem;
+  }
+  .quiz-title{
+    font-family:'Fredoka', sans-serif;
+    font-weight:600;
+    font-size:1.15rem;
+    margin:0;
+  }
+  .quiz-score{
+    font-family:'Fredoka', sans-serif;
+    font-weight:600;
+    font-size:0.9rem;
+    background:var(--cream-dark);
+    padding:0.35rem 0.8rem;
+    border-radius:999px;
+  }
+  .q-item{
+    border-top:1.5px dashed var(--line);
+    padding:1.1rem 0;
+  }
+  .q-item:first-of-type{border-top:none; padding-top:0;}
+  .q-prompt{
+    font-weight:700;
+    margin:0 0 0.7rem;
+    font-size:0.98rem;
+  }
+  .q-options{
+    display:grid;
+    gap:0.5rem;
+  }
+  .q-opt{
+    text-align:left;
+    background:var(--cream);
+    border:1.5px solid var(--line);
+    border-radius:12px;
+    padding:0.6rem 0.9rem;
+    font-family:'Nunito', sans-serif;
+    font-size:0.9rem;
+    cursor:pointer;
+    color:var(--choc);
+    transition:background 0.15s ease, border-color 0.15s ease;
+  }
+  .q-opt:hover:not([disabled]){border-color:var(--caramel-dark); background:#FFF6E4;}
+  .q-opt.correct{background:#E4F0E7; border-color:var(--mint-dark); color:#254A34; font-weight:700;}
+  .q-opt.incorrect{background:#FBE3E3; border-color:var(--berry-dark); color:var(--berry-dark); font-weight:700;}
+  .q-opt[disabled]{cursor:default;}
+  .q-feedback{
+    margin-top:0.6rem;
+    font-size:0.85rem;
+    color:var(--choc-soft);
+    background:var(--cream-dark);
+    border-radius:10px;
+    padding:0.6rem 0.8rem;
+    display:none;
+  }
+  .q-feedback.show{display:block;}
+
+  .quiz-done{
+    margin-top:1.2rem;
+    text-align:center;
+    font-family:'Fredoka', sans-serif;
+    font-weight:600;
+    padding:0.9rem;
+    border-radius:14px;
+    display:none;
+  }
+  .quiz-done.show{display:block;}
+
+  /* glossary accordion */
+  .glossary{
+    max-width:900px;
+    margin:4rem auto 0;
+    padding:0 1.5rem;
+  }
+  .glossary-item{
+    border-bottom:1.5px solid var(--line);
+  }
+  .glossary-q{
+    width:100%;
+    background:none;
+    border:none;
+    text-align:left;
+    padding:0.9rem 0.2rem;
+    font-family:'Fredoka', sans-serif;
+    font-size:1rem;
+    font-weight:600;
+    cursor:pointer;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:var(--choc);
+  }
+  .glossary-a{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height 0.3s ease;
+    font-size:0.9rem;
+    color:var(--choc-soft);
+    padding:0 0.2rem;
+  }
+  .glossary-item.open .glossary-a{max-height:200px; padding-bottom:0.9rem;}
+  .glossary-item.open .glossary-q .plus{transform:rotate(45deg);}
+  .plus{transition:transform 0.2s ease; font-size:1.2rem; color:var(--berry);}
+
+  footer.note{
+    max-width:900px;
+    margin:3rem auto 0;
+    padding:0 1.5rem;
+    text-align:center;
+    font-size:0.85rem;
+    color:var(--choc-soft);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <span class="eyebrow">INFS2040 &middot; exam prep</span>
+  <h1 class="title">The <span>Bake Shop</span> of Project Scope</h1>
+  <p class="subtitle">Three tiers, three weeks. Read a layer, flip the recipe cards, then take the taste test to check what stuck.</p>
+
+  <div class="cake-wrap">
+    <div class="cake-nav">
+      <button class="tier-btn tier-week4" onclick="document.getElementById('week4').scrollIntoView()">
+        <span class="lbl"><small>Top tier &middot; week 4</small>Project Scope</span>
+        <span class="arrow">&#8595;</span>
+      </button>
+      <button class="tier-btn tier-week3" onclick="document.getElementById('week3').scrollIntoView()">
+        <span class="lbl"><small>Middle tier &middot; week 3</small>Personas &amp; Ideation</span>
+        <span class="arrow">&#8595;</span>
+      </button>
+      <button class="tier-btn tier-week2" onclick="document.getElementById('week2').scrollIntoView()">
+        <span class="lbl"><small>Base tier &middot; week 2</small>Double Diamond &amp; Ideation</span>
+        <span class="arrow">&#8595;</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="progress-strip">
+    <span>Taste tests done</span>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <span class="progress-num"><span id="progressNum">0</span>/18</span>
+  </div>
+</div>
+
+<!-- ============ WEEK 2 ============ -->
+<section class="section" id="week2">
+  <div class="section-head">
+    <span class="section-tag tag-week2">Week 2</span>
+  </div>
+  <h2 class="section-title">Double Diamond &amp; Ideation</h2>
+  <p class="section-sub">The base tier holds up everything else: how projects run, and the CX/UX/UI vocabulary you'll reuse all exam.</p>
+
+  <div class="card-grid" id="cards-week2"></div>
+
+  <div class="note-block">
+    <h3>Worth remembering</h3>
+    <ul>
+      <li><b>Double Diamond</b> = Discover &rarr; Define &rarr; Develop &rarr; Deliver, two diverge/converge cycles.</li>
+      <li><b>Waterfall</b>: ever-increasing divergence between original idea and final product. <b>Agile</b>: small scope, small divergences, iterative correction.</li>
+      <li><b>Customer Journey Map</b> tracks touchpoints, sentiment, needs, frustrations and improvement opportunities across stages.</li>
+      <li>Case study line to remember: the honey campaign found its <b>positioning</b> in "it all starts with a bee."</li>
+    </ul>
+  </div>
+
+  <div class="quiz-box">
+    <div class="quiz-head">
+      <p class="quiz-title">🍓 Taste test 1 &mdash; base tier</p>
+      <span class="quiz-score" id="score-week2">0 / 6</span>
+    </div>
+    <div id="quiz-week2"></div>
+    <div class="quiz-done" id="done-week2" style="background:#FBE3EC; color:var(--berry-dark);">Base tier tasted! On to the middle tier.</div>
+  </div>
+</section>
+
+<!-- ============ WEEK 3 ============ -->
+<section class="section" id="week3">
+  <div class="section-head">
+    <span class="section-tag tag-week3">Week 3</span>
+  </div>
+  <h2 class="section-title">Personas &amp; Ideation</h2>
+  <p class="section-sub">The middle tier: how a project actually starts, who you're designing for, and why plans quietly fail.</p>
+
+  <div class="card-grid" id="cards-week3"></div>
+
+  <div class="note-block">
+    <h3>Worth remembering</h3>
+    <ul>
+      <li><b>Concept statement</b>: 100&ndash;150 words, a mission statement readable by any audience, iterated not written once.</li>
+      <li>An <b>authentic persona</b> is research-based, has goals, applies to exactly one user role &mdash; never a demographic caricature.</li>
+      <li><b>Planning fallacy</b> (Kahneman &amp; Tversky, 1979): we underrate our own plan's time/cost/risk &mdash; fix is the <b>outside view</b>.</li>
+      <li><b>Pre-mortem</b> (Gary Klein, 2007): imagine the project has already failed, then explain why &mdash; sharper, more specific risks than a normal brainstorm.</li>
+      <li>Synthetic AI research caveat: "Claude is guessing plausibly, not measuring &mdash; treat every number as a hypothesis."</li>
+    </ul>
+  </div>
+
+  <div class="quiz-box">
+    <div class="quiz-head">
+      <p class="quiz-title">🍯 Taste test 2 &mdash; middle tier</p>
+      <span class="quiz-score" id="score-week3">0 / 6</span>
+    </div>
+    <div id="quiz-week3"></div>
+    <div class="quiz-done" id="done-week3" style="background:#FBEED1; color:var(--caramel-dark);">Middle tier tasted! One layer to go.</div>
+  </div>
+</section>
+
+<!-- ============ WEEK 4 ============ -->
+<section class="section" id="week4">
+  <div class="section-head">
+    <span class="section-tag tag-week4">Week 4</span>
+  </div>
+  <h2 class="section-title">Project Scope</h2>
+  <p class="section-sub">The top tier: the formal documents and processes that keep scope from creeping.</p>
+
+  <div class="card-grid" id="cards-week4"></div>
+
+  <div class="note-block">
+    <h3>Worth remembering</h3>
+    <ul>
+      <li>Scope management's six processes: define scope management &rarr; collect requirements &rarr; define scope &rarr; create SOW &rarr; validate scope &rarr; control scope.</li>
+      <li><b>SOW vs. Scope</b>: the SOW is the high-level document (mission, deliverables, success criteria); scope is one element inside it &mdash; scope has no milestones.</li>
+      <li><b>SOW vs. Project Charter</b>: SOW doesn't authorise budget or resources &mdash; the charter does.</li>
+      <li>Framestore case: <b>UI</b> = the VFX shots, <b>UX</b> = how a project runs through the facility, <b>CX</b> = the bespoke design of the client's project and pipeline.</li>
+    </ul>
+  </div>
+
+  <div class="quiz-box">
+    <div class="quiz-head">
+      <p class="quiz-title">🎂 Taste test 3 &mdash; top tier</p>
+      <span class="quiz-score" id="score-week4">0 / 6</span>
+    </div>
+    <div id="quiz-week4"></div>
+    <div class="quiz-done" id="done-week4" style="background:#E4F0E7; color:var(--mint-dark);">Whole cake tasted &mdash; nice work!</div>
+  </div>
+</section>
+
+<!-- ============ GLOSSARY ============ -->
+<div class="glossary">
+  <h2 class="section-title" style="margin-bottom:1rem;">🧁 Cookbook index (quick glossary)</h2>
+  <div id="glossary-list"></div>
+</div>
+
+<footer class="note">Built from your Week 2&ndash;4 notes. Flip the cards, retake the taste tests as often as you like &mdash; nothing is saved between visits.</footer>
+
+<script>
+/* ---------------- DATA ---------------- */
+
+var cardsWeek2 = [
+  ["Triple Constraint","The trade-off triangle of <b>scope, cost, and schedule</b> &mdash; changing one affects the others.","You're baking a wedding cake to order: how many tiers (scope), what you're paid for ingredients and labour (cost), and the deadline before the wedding (schedule). Add a tier last-minute and either the budget or the deadline has to give."],
+  ["Double Diamond","Discover &rarr; Define &rarr; Develop &rarr; Deliver. Two diverge/converge cycles: broaden the problem, narrow it, broaden solutions, narrow to one.","First you dream up every possible flavour you could bake (diverge), then pick one and settle the recipe (converge). Then you diverge again on how to decorate it &mdash; buttercream? fondant? &mdash; before converging on the final finish."],
+  ["MVP","<b>Minimum Viable Product</b> &mdash; the Lean approach: design for the fastest minimum delivery, cut everything else.","The plainest cupcake you can serve that still tastes good and holds together &mdash; no fondant, no piping, just batter and frosting. Ship that first, add sprinkles later."],
+  ["CX design","Deals with <b>customer interactions</b> overall &mdash; broader than any single screen.","The whole bakery visit: the smell when you walk in, the queue, the chat at the counter, the box it comes in &mdash; not just the cake itself."],
+  ["UX design","Focuses on <b>human&ndash;computer interaction</b>.","How easy the cake actually is to eat &mdash; the slice doesn't crumble, the fork works, the portion is sized right."],
+  ["UI","<b>Screen interactions</b> specifically &mdash; a subset of UX.","Literally the icing and decoration on top &mdash; what you see first when you look at the cake."],
+  ["Customer Journey Map","Plots touchpoints, sentiment, customer needs/interactions, expectations/frustrations, and improvement opportunities across project stages.","Walking through a customer's whole visit slice by slice: queue, order, wait, first bite, review &mdash; noting exactly where they smiled and where they got annoyed."],
+  ["User Story","\"As a [user], I want [goal], so that [benefit].\" A short structured requirement statement.","A written order ticket: \"As a birthday customer, I want a nut-free cake, so that my guests with allergies can eat it too.\""],
+  ["Positioning","How a brand is placed relative to competitors &mdash; e.g. the honey campaign's \"it all starts with a bee.\"","The story on the bakery's sign, not just what's in the batter &mdash; e.g. \"we only use honey from local bees down the road.\""]
+];
+
+var cardsWeek3 = [
+  ["Concept statement","A 100&ndash;150 word mission statement for the system, readable by any audience, that sets focus and scope. Iterated, not written once.","The one-paragraph description on the bakery's menu that explains a cake to anyone walking past &mdash; even someone who's never baked in their life."],
+  ["Wide-mouth early funnel","Projects needing more upfront design work: usage research, modelling, conceptual design, rapid idea evaluation and prototyping &mdash; before narrowing.","Before you touch flour, you research: who's this cake for, what flavours do they love, sketch a few designs. More prep than jumping straight to baking &mdash; but you end up with the right cake."],
+  ["Authentic persona","Research-based, represents one user role, has stated goals, built on deep empathy &mdash; not a demographic caricature.","Not \"people who like cake\" &mdash; it's \"Maria, 34, always orders a naked cake with berries because she hates heavy fondant.\" A specific regular, not a demographic."],
+  ["Empathy Map","A tool capturing what a user thinks, feels, says and does &mdash; feeds into building a persona.","Standing behind the counter imagining what this specific customer is thinking, feeling and craving before they've even ordered."],
+  ["Planning fallacy","Kahneman &amp; Tversky, 1979: we underestimate our own plan's time, cost and risk, even knowing how past projects went.","Assuming the wedding cake will only take the 3 hours you planned &mdash; even though every past wedding cake has taken 6."],
+  ["Inside vs outside view","Inside view = \"our plan always looks achievable\". Outside view = \"how did similar projects actually turn out\" &mdash; the corrective fix.","\"My kitchen, my recipe, it'll be fine\" (inside) vs. \"how long did the last five three-tier cakes actually take me?\" (outside)."],
+  ["Pre-mortem","Gary Klein, 2007: imagine the project has already failed and ask why &mdash; produces sharper, more specific risks than a normal brainstorm.","Before you start baking, imagine the cake has already collapsed at the venue &mdash; then work backwards to figure out why, so you can prevent it."],
+  ["Post-mortem","Reflection after a project ends. Limitation: the learning arrives too late to save that project.","The cake already collapsed at the venue &mdash; now you're figuring out why, too late to save that cake."],
+  ["Synthetic data","Using AI to simulate research (e.g. survey respondents) when there's no time or budget for the real thing &mdash; treat results as hypotheses, not facts.","Asking an AI to guess how 300 customers might rate a new flavour instead of holding a real taste-test. A useful starting guess &mdash; but you still need real tasters before you trust it."]
+];
+
+var cardsWeek4 = [
+  ["Project Scope Management","The processes involved in defining and controlling what is, and is not, included in a project.","Deciding exactly what goes into the cake and what doesn't &mdash; is it two tiers or three? Does the price include a topper or not?"],
+  ["SOW","<b>Statement of Work</b> &mdash; a formal document defining the entire extent of work, deliverables, cost and timeline. PMBOK: \"a narrative description of products or services to be supplied under contract.\"","The full order form: flavour, size, tiers, decoration, delivery date, price &mdash; signed by both baker and customer before anyone preheats the oven."],
+  ["WBS","<b>Work Breakdown Structure</b> &mdash; a deliverable-oriented breakdown of a project into smaller components.","Breaking the whole cake into buildable pieces: bake the sponge, make the buttercream, stack the tiers, pipe the border, add the topper."],
+  ["MoSCoW","Requirement prioritisation: <b>M</b>ust have, <b>S</b>hould have, <b>C</b>ould have, <b>W</b>on't have.","Must have: sponge and frosting. Should have: a smooth finish. Could have: a topper. Won't have: edible gold leaf &mdash; not for this order."],
+  ["Validating scope","Formal acceptance of completed deliverables, typically via customer inspection and sign-off.","The customer tastes and inspects the finished cake and signs off on it before it leaves the shop."],
+  ["Controlling scope","Managing changes to scope: influencing what causes changes, processing them via change control, and managing them when they occur.","Politely handling the customer who calls the day before asking for two extra tiers &mdash; is that in the order, and if not, what changes (price, time)?"],
+  ["Scope creep","Uncontrolled expansion of project scope over time; measured against the planned vs. actual <b>variance</b>.","The \"just one more tier\" requests that quietly turn a simple cake into a five-layer wedding cake without anyone updating the price or the deadline."],
+  ["SOW vs Project Charter","The SOW doesn't authorise a PM to spend budget or allocate resources &mdash; the project charter does that.","The order form describes the cake &mdash; it doesn't hand the baker the keys to the kitchen or the ingredient budget. That authorisation is a separate document."],
+  ["Framestore case","UI = the VFX shots. UX = how a project runs through the facility. CX = the bespoke design of the client's project and pipeline.","UI = the decorated cake itself. UX = how smoothly the order moved through the kitchen from batter to box. CX = the whole bespoke experience the bakery designed around that specific client's wedding."]
+];
+
+var quizWeek2 = [
+  {q:"UX design focuses primarily on:", opts:["Screen interactions only","Human-computer interaction","Customer interactions overall","Vendor contracts"], correct:1, fb:"UX = human-computer interaction. UI is the screen-interaction subset; CX is the broader customer-interaction picture."},
+  {q:"The Triple Constraint is made up of:", opts:["Scope, cost, schedule","Brand, media, medium","Empathy, persona, journey","SOW, WBS, MoSCoW"], correct:0, fb:"Scope, cost (budget) and schedule (time) trade off against each other."},
+  {q:"MVP stands for:", opts:["Most Valuable Persona","Minimum Viable Product","Maximum Value Proposition","Multi-Vendor Package"], correct:1, fb:"MVP = Minimum Viable Product, the Lean approach of shipping the fastest minimum delivery."},
+  {q:"In the Double Diamond, the correct phase order is:", opts:["Define, Discover, Deliver, Develop","Discover, Define, Develop, Deliver","Develop, Deliver, Discover, Define","Deliver, Develop, Define, Discover"], correct:1, fb:"Discover (diverge) -> Define (converge) -> Develop (diverge) -> Deliver (converge)."},
+  {q:"Waterfall projects are described as having:", opts:["Small, iterative corrections","Ever-increasing divergence from the original idea","No scope at all","Constant client co-location"], correct:1, fb:"Waterfall's linear structure means divergence between the original idea and the final product keeps growing."},
+  {q:"The honey campaign's insight \"it all starts with a bee\" is an example of:", opts:["A Statement of Work","Positioning / proposition","A Work Breakdown Structure","Scope creep"], correct:1, fb:"That's the brand's positioning/proposition, found by talking to passionate stakeholders (beekeepers, environmentalists, consumers)."}
+];
+
+var quizWeek3 = [
+  {q:"A system/product concept statement should be roughly:", opts:["10-20 words","100-150 words","500+ words","exactly 1 sentence"], correct:1, fb:"Concise: 100-150 words, a readable mission statement for a broad audience."},
+  {q:"An \"authentic\" persona is defined mainly by:", opts:["Demographic averages","Research-based goals for one user role","A stock photo from a filing cabinet","The project's budget"], correct:1, fb:"Authentic personas are research-based, represent exactly one user role, and carry stated goals."},
+  {q:"The planning fallacy was described by:", opts:["Gary Klein","Kahneman & Tversky","Steve Jobs","Adam Ferrier"], correct:1, fb:"Kahneman & Tversky, 1979 — we underestimate our own plan's time, cost and risk."},
+  {q:"A pre-mortem asks the team to:", opts:["Celebrate a finished project","Imagine the project has already failed, and ask why","List generic risks with no framing","Skip requirements gathering"], correct:1, fb:"Pre-mortem: prospective hindsight — imagine failure as already certain, then explain why. Produces sharper, more specific reasons."},
+  {q:"The \"wide-mouth\" early funnel puts extra work upfront because:", opts:["It's required by law","It gets the design right before scaling up — the cost of doing it right","It skips requirements entirely","It replaces the need for personas"], correct:1, fb:"Upfront usage research, modelling and rapid prototyping cost more time early, but it's \"the cost of doing it right.\""},
+  {q:"The key caveat about AI-simulated (synthetic) research data is:", opts:["It's always statistically significant","It should be treated as a hypothesis, not a measurement","It replaces the need for a persona","It only works for water campaigns"], correct:1, fb:"\"Claude is guessing plausibly, not measuring — treat every number as a hypothesis,\" to be validated with real evidence later."}
+];
+
+var quizWeek4 = [
+  {q:"Project Scope Management is best defined as:", opts:["The budget approval process","The processes for defining and controlling what is/isn't in a project","A type of persona","A marketing campaign"], correct:1, fb:"It's the set of processes that define and control what is, and is not, included in the project."},
+  {q:"Which is NOT one of the six scope management processes?", opts:["Collect requirements","Create SOW","Validate scope","Run a pre-mortem"], correct:3, fb:"The six are: define scope management, collect requirements, define scope, create SOW, validate scope, control scope. Pre-mortem is a Week 3 risk tool."},
+  {q:"MoSCoW prioritisation stands for:", opts:["Must, Should, Could, Won't","Money, Scope, Cost, Work","Mission, Scope, Change, Workflow","Model, Schedule, Cost, Work"], correct:0, fb:"Must have, Should have, Could have, Won't have."},
+  {q:"The key difference between a SOW and Scope is:", opts:["They are identical terms","Scope is an element inside the SOW and has no milestones","Scope is only used by vendors","SOW never includes deliverables"], correct:1, fb:"The SOW is the high-level document (mission, deliverables, success criteria); scope is one element inside it and doesn't have milestones."},
+  {q:"Validating scope typically involves:", opts:["Formal customer inspection and sign-off on deliverables","Writing the project's user stories","Choosing a brand persona","Running a regression analysis"], correct:0, fb:"Validating scope = formal acceptance of completed deliverables, usually via customer inspection and sign-off."},
+  {q:"In the Framestore case study, UX referred to:", opts:["The actual VFX shots on screen","How a project runs through the facility (the pipeline experience)","The client's contract","The final render only"], correct:1, fb:"UI = the VFX shots. UX = how the project runs through the facility. CX = the bespoke design of the client's project and pipeline."}
+];
+
+var glossary = [
+  ["SOW","Statement of Work — formal document defining project work, deliverables, cost and timeline."],
+  ["WBS","Work Breakdown Structure — deliverable-oriented decomposition of a project."],
+  ["MoSCoW","Must / Should / Could / Won't have — requirement prioritisation."],
+  ["Double Diamond","Discover, Define, Develop, Deliver — two diverge/converge cycles."],
+  ["Triple Constraint","Scope, cost and schedule trade-off."],
+  ["Persona","Research-based representation of one user role, with goals."],
+  ["Planning fallacy","Underestimating time/cost/risk of our own plans (Kahneman & Tversky, 1979)."],
+  ["Pre-mortem","Imagining failure before starting, to surface risks early (Gary Klein, 2007)."],
+  ["Scope creep","Uncontrolled expansion of project scope over time."],
+  ["User Story","\"As a [user], I want [goal], so that [benefit].\""]
+];
+
+/* ---------------- RENDER CARDS ---------------- */
+function renderCards(containerId, list){
+  var el = document.getElementById(containerId);
+  list.forEach(function(item){
+    var card = document.createElement('div');
+    card.className = 'flip-card';
+    card.innerHTML =
+      '<div class="flip-inner">'+
+        '<div class="flip-face flip-front"><span class="term">'+item[0]+'</span><span class="hint">tap for definition + cake terms</span></div>'+
+        '<div class="flip-face flip-back"><p class="def">'+item[1]+'</p><p class="analogy"><span class="lead">Cake terms</span>'+item[2]+'</p></div>'+
+      '</div>';
+    card.addEventListener('click', function(){ card.classList.toggle('flipped'); });
+    el.appendChild(card);
+  });
+}
+renderCards('cards-week2', cardsWeek2);
+renderCards('cards-week3', cardsWeek3);
+renderCards('cards-week4', cardsWeek4);
+
+/* ---------------- RENDER GLOSSARY ---------------- */
+(function(){
+  var el = document.getElementById('glossary-list');
+  glossary.forEach(function(item){
+    var row = document.createElement('div');
+    row.className = 'glossary-item';
+    row.innerHTML =
+      '<button class="glossary-q">'+item[0]+'<span class="plus">+</span></button>'+
+      '<div class="glossary-a">'+item[1]+'</div>';
+    row.querySelector('.glossary-q').addEventListener('click', function(){
+      row.classList.toggle('open');
+    });
+    el.appendChild(row);
+  });
+})();
+
+/* ---------------- QUIZ ENGINE ---------------- */
+var totalAnswered = 0;
+var TOTAL_QUESTIONS = 18;
+
+function updateProgress(){
+  var pct = Math.round((totalAnswered / TOTAL_QUESTIONS) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressNum').textContent = totalAnswered;
+}
+
+function renderQuiz(containerId, scoreId, doneId, questions){
+  var el = document.getElementById(containerId);
+  var scoreEl = document.getElementById(scoreId);
+  var doneEl = document.getElementById(doneId);
+  var score = 0;
+  var answeredCount = 0;
+
+  questions.forEach(function(item, qi){
+    var wrap = document.createElement('div');
+    wrap.className = 'q-item';
+
+    var prompt = document.createElement('p');
+    prompt.className = 'q-prompt';
+    prompt.textContent = (qi+1) + '. ' + item.q;
+    wrap.appendChild(prompt);
+
+    var optsWrap = document.createElement('div');
+    optsWrap.className = 'q-options';
+
+    var feedback = document.createElement('div');
+    feedback.className = 'q-feedback';
+    feedback.textContent = item.fb;
+
+    item.opts.forEach(function(optText, oi){
+      var btn = document.createElement('button');
+      btn.className = 'q-opt';
+      btn.textContent = optText;
+      btn.addEventListener('click', function(){
+        var allBtns = optsWrap.querySelectorAll('.q-opt');
+        allBtns.forEach(function(b){ b.disabled = true; });
+
+        if(oi === item.correct){
+          btn.classList.add('correct');
+          score++;
+        } else {
+          btn.classList.add('incorrect');
+          allBtns[item.correct].classList.add('correct');
+        }
+        feedback.classList.add('show');
+        scoreEl.textContent = score + ' / ' + questions.length;
+
+        answeredCount++;
+        totalAnswered++;
+        updateProgress();
+
+        if(answeredCount === questions.length){
+          doneEl.classList.add('show');
+          doneEl.textContent = 'Tier tasted: ' + score + '/' + questions.length + ' correct. ' + (score === questions.length ? 'Full marks — nailed it!' : 'Scroll up to re-flip any tricky cards.');
+        }
+      });
+      optsWrap.appendChild(btn);
+    });
+
+    wrap.appendChild(optsWrap);
+    wrap.appendChild(feedback);
+    el.appendChild(wrap);
+  });
+}
+
+renderQuiz('quiz-week2','score-week2','done-week2', quizWeek2);
+renderQuiz('quiz-week3','score-week3','done-week3', quizWeek3);
+renderQuiz('quiz-week4','score-week4','done-week4', quizWeek4);
+</script>
+</body>
+</html>
